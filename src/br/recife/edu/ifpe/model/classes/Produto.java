@@ -7,13 +7,24 @@ package br.recife.edu.ifpe.model.classes;
 
 public class Produto {
     
-    private int codigo;
+    private Integer codigo;
     private String nome;
     private String marca;
     private String categoria;
-    private String descricao;
+    private String descricao;    
 
-    public int getCodigo() {
+    public Produto() {
+	}    
+
+	public Produto(Integer codigo, String nome, String marca, String categoria, String descricao) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.marca = marca;
+		this.categoria = categoria;
+		this.descricao = descricao;
+	}
+
+	public int getCodigo() {
         return codigo;
     }
 

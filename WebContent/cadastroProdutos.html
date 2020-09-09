@@ -9,18 +9,25 @@
     <div>
         <h1 style="margin-left: 10px;">Cadastro de Produtos</h1>
 
-        <form action="ProdutoServlet" method="post">
+        <form action="ProdutoServlet" method="POST">
             <div style="margin-left: 10px;">
+            
+            	<div style="padding-bottom: 5px;">
+                    <label>
+                        Código: <input type="text" name="codigo"
+                              style="width: 100px; margin-left: 16px;">
+                    </label>
+                </div>
                 <div style="padding-bottom: 5px;">
                     <label>
                         Nome: <input type="text" name="nome" placeholder="Insira o nome do produto"
-                              style="width: 250px; margin-left: 23px;">
+                              style="width: 250px; margin-left: 24px;">
                     </label>
                 </div>
                 <div style="padding-bottom: 5px;">
                     <label>Marca: 
                         <input type="text" name="marca" placeholder="Insira a marca do produto"
-                        style="width: 250px; margin-left: 23px;">
+                        style="width: 250px; margin-left: 24px;">
                     </label>
                 </div>
     
