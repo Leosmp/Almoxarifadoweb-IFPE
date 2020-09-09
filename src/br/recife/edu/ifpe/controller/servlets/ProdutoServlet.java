@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 
 /**
@@ -32,14 +34,25 @@ public class ProdutoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		int codigo = Integer.parseInt(request.getParameter("codigo"));
+		
+		Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+		
 		try(PrintWriter out = response.getWriter()){
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<head>");
+			out.println("<meta charset=\"UTF-8\">");
 			out.println("<title>Servlet ProdutoServlet</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>Servlet ProdutoServlet at " + response.getContentType() + "</h1>");
+			out.println("<h1>Produtos Recuperados</h1>");
+			out.println("<div><p>Código: " + p.getCodigo() + "</p></div>");
+			out.println("<div><p>Nome: " + p.getNome() + "</p></div>");
+			out.println("<div><p>Marca: " + p.getMarca() + "</p></div>");
+			out.println("<div><p>Categoria: " + p.getCategoria() + "</p></div>");
+			out.println("<div><p>Descrição: " + p.getDescricao() + "</p></div>");
+			out.println("<a href = \"index.html\">home</a>");
 			out.println("</body>");
 			out.println("</html>");
 		}
@@ -61,7 +74,14 @@ public class ProdutoServlet extends HttpServlet {
 			
 			Produto produto = new Produto(codigo, nome, marca, categoria, descricao);
 			
-			RepositorioProdutos.getCurrentInstance().create(produto);			
+			RepositorioProdutos.getCurrentInstance().create(produto);
+			
+			ItemEstoque itemEstoque = new ItemEstoque();
+			itemEstoque.setProduto(produto);
+			itemEstoque.setQuantidade(0);
+			itemEstoque.setCodigo(produto.getCodigo());
+			
+			RepositorioEstoque.getCurrentInstance().read().addItem(itemEstoque);
 			
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
@@ -71,19 +91,6 @@ public class ProdutoServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>O Produto " + produto.getNome() + " foi cadastrado com sucesso!</h1>");
-			out.println("<a href = \"index.html\">home</a>");
-			out.println("</body>");
-			out.println("</html>");
-		} catch (Exception e) {
-			PrintWriter out = response.getWriter();
-			out.println("<!DOCTYPE html>");
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<meta charset=\"UTF-8\">");
-			out.println("<title>Servlet ProdutoServlet</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<h1> Erro! Código inválido </h1>");
 			out.println("<a href = \"index.html\">home</a>");
 			out.println("</body>");
 			out.println("</html>");

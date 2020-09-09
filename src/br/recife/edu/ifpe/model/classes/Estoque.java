@@ -28,10 +28,6 @@ public class Estoque {
     public List<ItemEstoque> getItens() {
         return itens;
     }
-
-    public void setItens(List<ItemEstoque> itens) {
-        this.itens = itens;
-    }
     
     public void addItem(ItemEstoque i){
         this.itens.add(i);
