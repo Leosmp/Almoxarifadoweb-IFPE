@@ -38,8 +38,95 @@ public class ProdutoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		String codAux = request.getParameter("codigo");
+		String atualizar = request.getParameter("atualizar");
+		String deletar = request.getParameter("deletar");
+		
+		if(deletar != null) {
+			int codigo = Integer.parseInt(codAux);
+			
+			Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+			RepositorioProdutos.getCurrentInstance().delete(p);
+			
+			response.setContentType("text/html;charset=UTF-8");
+			try (PrintWriter out = response.getWriter()) {
+				out.println("<!DOCTYPE html>");
+				out.println("<html>");
+				out.println("<head>");
+				out.println("<title>Servlet ProdutoServlet</title>");
+				out.println("</head>");
+				out.println("<body>");
+				out.println("<h1>O Produto " + p.getNome() + " foi deletado com sucesso!</h1>");
+				out.println("<a href = \"index.html\">home</a>");
+				out.println("</body>");
+				out.println("</html>");
+			}
+		}
+		
+		if(atualizar != null) {
+			
+			int codigo = Integer.parseInt(codAux);
 
-		if (codAux == null) {
+			Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+			
+			try (PrintWriter out = response.getWriter()) {
+				out.println("<!DOCTYPE html>");
+				out.println("<html>");
+				out.println("<head>");
+				out.println("<meta charset=\"UTF-8\">");
+				out.println("<title>Servlet ProdutoServlet</title>");
+				out.println("</head>");
+				out.println("<body>");
+				out.println("<h1>Produtos Recuperados</h1>");				
+				out.println("<a href = \"ProdutoServlet\">Lista de produtos</a>");
+				out.println("<form action=\"ProdutoServlet\" method=\"POST\">\r\n" 
+						+ "            <div style=\"margin-left: 10px;\">\r\n" 
+						+ "            \r\n" 
+						+ "            	<div style=\"padding-bottom: 5px;\">\r\n" 
+						+ "                  <label>\r\n" 
+						+ "                        Código: <input type=\"hidden\" name=\"codigo\" value=\""+ p.getCodigo()+"\"\r\n"
+						+ "                              style=\"width: 100px; margin-left: 16px;\">\r\n" 
+						+ "                    </label>\r\n" 
+						+ "                </div>\r\n" 
+						+ "                <div style=\"padding-bottom: 5px;\">\r\n" 
+						+ "                    <label>Nome: \r\n" 
+						+ "                        <input type=\"text\" name=\"nome\" placeholder=\"Insira o nome do produto\" value=\""+ p.getNome()+"\"\r\n" 
+						+ "                        style=\"width: 250px; margin-left: 24px;\">\r\n" 
+						+ "                    </label>\r\n" 
+						+ "                </div>\r\n" 
+						+ "                <div style=\"padding-bottom: 5px;\">\r\n" 
+						+ "                    <label>Marca: \r\n" 
+						+ "                        <input type=\"text\" name=\"marca\" placeholder=\"Insira a marca do produto\" value=\""+ p.getMarca()+"\"\r\n" 
+						+ "                        style=\"width: 250px; margin-left: 24px;\">\r\n" 
+						+ "                    </label>\r\n" 
+						+ "                </div>\r\n" 
+						+ "    \r\n" 
+						+ "                <div style=\"padding-bottom: 5px;\">\r\n" 
+						+ "                    <label>Categoria: \r\n" 
+						+ "                        <input type=\"text\" name=\"categoria\" placeholder=\"Insira a categoria do produto\" value=\""+ p.getCategoria()+"\"\r\n" 
+						+ "                        style=\"width: 250px;\">\r\n" 
+						+ "                    </label>\r\n" 
+						+ "                </div>\r\n" 
+						+ "    \r\n" 
+						+ "                <div style=\"margin-bottom: 15px;\">\r\n" 
+						+ "                    <label>Descrição: \r\n" 
+						+ "                        <textarea name=\"descricao\"\r\n" 
+						+ "                        style=\"width: 250px; height: 100px; vertical-align: top\">" + p.getDescricao()+ "</textarea>\r\n" 
+						+ "                    </label>\r\n" 
+						+ "                </div>\r\n" 
+						+ "    \r\n"
+						+ "                    <input type=\"hidden\" name=\"atualizar\" value=\"1\">\r\n"
+						+ "                    <input type=\"submit\" value=\"Atualizar\" style=\"height: 25px; margin-right: 15px;\">\r\n" 
+						+ "                    <input type=\"reset\" value=\"Limpar\" style=\"height: 25px;\">\r\n"
+						+ "\r\n" 
+						+ "            </div>            \r\n" 
+						+ "\r\n" 
+						+ "        </form>");
+				out.println("</body>");
+				out.println("</html>");
+			}
+		}
+
+		if (codAux == null && atualizar == null && deletar == null) {
 			List<Produto> produtos = RepositorioProdutos.getCurrentInstance().readAll();
 			
 			response.setContentType("text/html;charset=UTF-8");
@@ -56,6 +143,7 @@ public class ProdutoServlet extends HttpServlet {
 								   + "<th>Nome</th>"
 								   + "<th>Marca</th>"
 								   + "<th>Categoria</th>"
+								   + "<th>Operações</th>"
 								   + "</tr>");
 				for (Produto p : produtos) {					
 					out.println("<tr>");
@@ -63,6 +151,11 @@ public class ProdutoServlet extends HttpServlet {
 					out.println("<td>" + p.getNome() + "</td>");
 					out.println("<td>" + p.getMarca() + "</td>");
 					out.println("<td>" + p.getCategoria() + "</td>");
+					out.println("<td>"
+									+ "<a href=\"ProdutoServlet?codigo=" + p.getCodigo()+ "\">Visualizar </a>"
+									+ "<a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&atualizar=1\">Atualizar </a>"
+									+ "<a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&deletar=1\">Deletar</a>"
+								+ "</td>");
 					out.println("</tr>");
 				}
 				out.println("</table>");
@@ -74,12 +167,12 @@ public class ProdutoServlet extends HttpServlet {
 			int codigo = Integer.parseInt(codAux);
 
 			Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
-
+			
+			response.setContentType("text/html;charset=UTF-8");
 			try (PrintWriter out = response.getWriter()) {
 				out.println("<!DOCTYPE html>");
 				out.println("<html>");
 				out.println("<head>");
-				out.println("<meta charset=\"UTF-8\">");
 				out.println("<title>Servlet ProdutoServlet</title>");
 				out.println("</head>");
 				out.println("<body>");
@@ -111,17 +204,23 @@ public class ProdutoServlet extends HttpServlet {
 			String marca = request.getParameter("marca");
 			String categoria = request.getParameter("categoria");
 			String descricao = request.getParameter("descricao");
-
+			
+			String atualizar = request.getParameter("atualizar");
+			
 			Produto produto = new Produto(codigo, nome, marca, categoria, descricao);
-
-			RepositorioProdutos.getCurrentInstance().create(produto);
-
-			ItemEstoque itemEstoque = new ItemEstoque();
-			itemEstoque.setProduto(produto);
-			itemEstoque.setQuantidade(0);
-			itemEstoque.setCodigo(produto.getCodigo());
-
-			RepositorioEstoque.getCurrentInstance().read().addItem(itemEstoque);
+			
+			if(atualizar != null) {
+				RepositorioProdutos.getCurrentInstance().update(produto);
+			} else {	
+				RepositorioProdutos.getCurrentInstance().create(produto);
+	
+				ItemEstoque itemEstoque = new ItemEstoque();
+				itemEstoque.setProduto(produto);
+				itemEstoque.setQuantidade(0);
+				itemEstoque.setCodigo(produto.getCodigo());
+	
+				RepositorioEstoque.getCurrentInstance().read().addItem(itemEstoque);
+			}
 
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
@@ -130,7 +229,11 @@ public class ProdutoServlet extends HttpServlet {
 			out.println("<title>Servlet ProdutoServlet</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>O Produto " + produto.getNome() + " foi cadastrado com sucesso!</h1>");
+			if(atualizar == null) {
+				out.println("<h1>O Produto " + produto.getNome() + " foi cadastrado com sucesso!</h1>");
+			}else {
+				out.println("<h1>O Produto " + produto.getNome() + " foi atualizado com sucesso!</h1>");
+			}
 			out.println("<a href = \"index.html\">home</a>");
 			out.println("</body>");
 			out.println("</html>");
