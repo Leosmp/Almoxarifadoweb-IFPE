@@ -60,7 +60,8 @@
 				<td><%= p.getMarca() %></td>
 				<td><%= p.getCategoria() %></td>
 				<td><a href="ProdutoServlet?codigo=<%=p.getCodigo() %>&redirect=visualiza">Visualizar </a>
-				    <a href="ProdutoServlet?codigo=<%=p.getCodigo() %>&redirect=atualiza">Atualizar </a></td>
+				    <a href="ProdutoServlet?codigo=<%=p.getCodigo() %>&redirect=atualiza">Atualizar </a>
+				    <a href="#" onclick="deletar(<%= p.getCodigo() %>)">Deletar </a></td>
 			</tr>		
 		<% } %>
 		</tbody>	
@@ -96,6 +97,13 @@
 		function modalRedirectClose() {
 			document.body.removeChild(modalRedirect);
 		}
+		
+		function deletar(codigo){
+			fetch("ProdutoServlet?codigo="+codigo,{method:'delete'})
+				.then(function(response){
+				location.reload();
+			});
+		};
 	</script>
 
 </body>

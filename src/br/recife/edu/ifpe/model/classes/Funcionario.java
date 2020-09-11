@@ -9,9 +9,18 @@ public class Funcionario {
     
     private int codigo;
     private String nome;
-    private String departamento;
+    private String departamento;    
 
-    public int getCodigo() {
+    public Funcionario() {
+	}    
+
+	public Funcionario(int codigo, String nome, String departamento) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.departamento = departamento;
+	}
+	
+	public int getCodigo() {
         return codigo;
     }
 
@@ -34,5 +43,32 @@ public class Funcionario {
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
+
+	@Override
+	public String toString() {
+		return "Funcionario [codigo=" + codigo + ", nome=" + nome + ", departamento=" + departamento + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + codigo;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcionario other = (Funcionario) obj;
+		if (codigo != other.codigo)
+			return false;
+		return true;
+	} 
     
 }
