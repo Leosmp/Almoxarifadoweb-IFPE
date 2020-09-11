@@ -36,11 +36,10 @@ public class ProdutoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
-		String redirect = request.getParameter("redirect");
-		
+
 		Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
 		request.setAttribute("produto", p);
-		
+
 		getServletContext().getRequestDispatcher("/produtos.jsp").forward(request, response);
 	}
 
@@ -57,18 +56,27 @@ public class ProdutoServlet extends HttpServlet {
 		String categoria = request.getParameter("categoria");
 		String descricao = request.getParameter("descricao");
 
+		String atualiza = request.getParameter("atualizar");
+
 		Produto p = new Produto(codigo, nome, marca, categoria, descricao);
-		RepositorioProdutos.getCurrentInstance().create(p);
-
-		ItemEstoque itemEstoque = new ItemEstoque();
-		itemEstoque.setProduto(p);
-		itemEstoque.setQuantidade(0);
-		itemEstoque.setCodigo(p.getCodigo());
-
-		RepositorioEstoque.getCurrentInstance().read().addItem(itemEstoque);
-
 		HttpSession session = request.getSession();
-		session.setAttribute("msg", "Produto " + p.getNome() + " foi cadastrado!");
+
+		if (atualiza == null) {
+			RepositorioProdutos.getCurrentInstance().create(p);
+
+			ItemEstoque itemEstoque = new ItemEstoque();
+			itemEstoque.setProduto(p);
+			itemEstoque.setQuantidade(0);
+			itemEstoque.setCodigo(p.getCodigo());
+
+			RepositorioEstoque.getCurrentInstance().read().addItem(itemEstoque);
+			
+			session.setAttribute("msg", "Produto " + p.getNome() + " foi cadastrado!");
+		} else {
+			RepositorioProdutos.getCurrentInstance().update(p);
+			session.setAttribute("msg", "Produto " + p.getNome() + " foi atualizado!");
+		}
+
 		response.sendRedirect("produtos.jsp");
 	}
 

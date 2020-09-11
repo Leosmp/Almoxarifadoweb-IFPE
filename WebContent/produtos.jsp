@@ -59,7 +59,8 @@
 				<td><%= p.getNome() %></td>
 				<td><%= p.getMarca() %></td>
 				<td><%= p.getCategoria() %></td>
-				<td><a href="ProdutoServlet?codigo=<%=p.getCodigo() %>&redirect=visualiza">Visualizar </a></td>
+				<td><a href="ProdutoServlet?codigo=<%=p.getCodigo() %>&redirect=visualiza">Visualizar </a>
+				    <a href="ProdutoServlet?codigo=<%=p.getCodigo() %>&redirect=atualiza">Atualizar </a></td>
 			</tr>		
 		<% } %>
 		</tbody>	

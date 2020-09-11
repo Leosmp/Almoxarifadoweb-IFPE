@@ -13,36 +13,41 @@
 		<form action="ProdutoServlet" method="POST">
 			<div style="margin-left: 10px;">
 				<div style="padding-bottom: 5px;">
-					<label> Código: <input type="text" name="codigo"
+					<label> Código: 
+						<input type="text" name="codigo" value="${(param.redirect != null && param['redirect'] eq 'atualiza')? produto.codigo : ''}"
 						style="width: 100px; margin-left: 16px;">
 					</label>
 				</div>
 				<div style="padding-bottom: 5px;">
-					<label>Nome: <input type="text" name="nome"
-						placeholder="Insira o nome do produto"
+					<label>Nome: 
+						<input type="text" name="nome" placeholder="Insira o nome do produto" value="${(param.redirect != null && param['redirect'] eq 'atualiza')? produto.nome : ''}"
 						style="width: 250px; margin-left: 24px;">
 					</label>
 				</div>
 				<div style="padding-bottom: 5px;">
-					<label>Marca: <input type="text" name="marca"
-						placeholder="Insira a marca do produto"
+					<label>Marca: 
+						<input type="text" name="marca"	placeholder="Insira a marca do produto" value="${(param.redirect != null && param['redirect'] eq 'atualiza')? produto.marca : ''}"
 						style="width: 250px; margin-left: 24px;">
 					</label>
 				</div>
 
 				<div style="padding-bottom: 5px;">
-					<label>Categoria: <input type="text" name="categoria"
-						placeholder="Insira a categoria do produto" style="width: 250px;">
+					<label>Categoria: 
+						<input type="text" name="categoria"	placeholder="Insira a categoria do produto" value="${(param.redirect != null && param['redirect'] eq 'atualiza')? produto.categoria : ''}"
+						style="width: 250px;">
 					</label>
 				</div>
 
 				<div style="margin-bottom: 15px;">
-					<label>Descrição: <textarea name="descricao"
-							style="width: 250px; height: 100px; vertical-align: top"></textarea>
+					<label>Descrição: 
+						<textarea name="descricao"
+						style="width: 250px; height: 100px; vertical-align: top">${(param.redirect != null && param['redirect'] eq 'atualiza')? produto.descricao : ''}</textarea>
 					</label>
 				</div>
+				
+				<input type="hidden" name="${(param.redirect != null && param.redirect eq 'atualiza')? 'atualizar': ''}" value="atualizar">
 
-				<input type="submit" value="Cadastrar"
+				<input type="submit" value="${(param.redirect != null && param.redirect eq 'atualiza')? 'atualizar': 'Cadastrar'}"
 					style="height: 25px; margin-right: 15px;"> <input
 					type="reset" value="Limpar" style="height: 25px;">
 			</div>
