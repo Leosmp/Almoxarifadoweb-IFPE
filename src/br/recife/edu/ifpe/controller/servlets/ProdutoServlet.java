@@ -1,7 +1,6 @@
 package br.recife.edu.ifpe.controller.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,8 +35,13 @@ public class ProdutoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
+		int codigo = Integer.parseInt(request.getParameter("codigo"));
+		String redirect = request.getParameter("redirect");
+		
+		Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+		request.setAttribute("produto", p);
+		
+		getServletContext().getRequestDispatcher("/produtos.jsp").forward(request, response);
 	}
 
 	/**
