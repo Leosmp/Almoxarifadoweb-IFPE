@@ -2,7 +2,6 @@
 <%@page import="br.recife.edu.ifpe.model.repositorios.RepositorioProdutos"%>
 <%@page import="java.util.List"%>
 
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -25,7 +24,7 @@
 	<button style="margin-bottom: 15px; display: block;" onclick="modalOpen()">Novo Produto</button>
 	
 	<div id="modal" style="position:absolute; top: 200px; left: 200px; border: 1px solid black; background: white;">
-		<%@include file="CadastroProduto.jsp" %>
+		<jsp:include page="CadastroProduto.jsp${'?codigo=1'}"/>
 		<br>
 		<button onclick="modalClose()">Close</button>	
 	</div>
@@ -52,7 +51,7 @@
 		</thead>		
 		<tbody>
 		<%
-			for(Produto p : produtos){ 
+			for(Produto p : produtos){
 		%>
 			<tr>
 				<td><%= p.getCodigo() %></td>
