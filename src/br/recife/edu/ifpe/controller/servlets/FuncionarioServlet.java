@@ -54,23 +54,23 @@ public class FuncionarioServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int codigo = Integer.parseInt(request.getParameter("codigo"));
 		String nome = request.getParameter("nome");
 		String departamento = request.getParameter("departamento");
 		HttpSession session = request.getSession();
 		
-		Funcionario func = new Funcionario(codigo, nome, departamento);
+		Funcionario func = new Funcionario(nome, departamento);
 		
 		String action = request.getParameter("editar");
 		
 		if(action == null) {
 			RepositorioFuncionario.getCurrentInstance().create(func);
-			session.setAttribute("msg", "Funcion√°rio " + func.getNome() + " foi cadastrado!");			
+			session.setAttribute("msg", "Funcion·rio " + func.getNome() + " foi cadastrado!");			
 		} else if(action.equals("Editar")) {
-			RepositorioFuncionario.getCurrentInstance().update(func);
-			session.setAttribute("msg", "Funcion√°rio " + func.getNome() + " foi atualizado!");
-		}  
-		
+			int codigo = Integer.parseInt(request.getParameter("codigo"));
+			func.setCodigo(codigo);
+			RepositorioFuncionario.getCurrentInstance().update(func);			
+			session.setAttribute("msg", "Funcion·rio " + func.getNome() + " foi atualizado!");
+		} 		
 		response.sendRedirect("listFuncionarios.jsp");
 	}
 	

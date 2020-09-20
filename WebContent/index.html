@@ -7,34 +7,54 @@ and open the template in the editor.
 <html>
 <head>
 <title>Almoxarifado Web - IFPE</title>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-		<div class="container">
-			<a href="index.html" class="navbar-brand">Almoxerifado Simples</a>
+	<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a style="font-size: 25px" href="index.html" class="navbar-brand justify-content-center font-weight-bold">Almoxarifado Simples</a>
 			<div>
-				<ul>
-					<li style="margin-bottom: 5px;"><a href="CadastroProduto.jsp">Cadastro
-							de Produtos</a></li>
-					<li style="margin-bottom: 5px;"><a href="produtos.jsp">Ver
-							produtos</a></li>
-				</ul>
-			</div>
-
-			<div>
-				<ul>
-					<li style="margin-bottom: 5px;"><a
-						href="/AlmoxarifadoWeb/FuncionarioServlet?action=cadastro">Cadastro
-							de Funcion√°rios</a></li>
-					<li style="margin-bottom: 5px;"><a
-						href="/AlmoxarifadoWeb/FuncionarioServlet?action=List_Funcionarios">Ver
-							funcion√°rios</a></li>
+				<ul class="nav justify-content-end">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"
+							style="font-size: 20px" > Produto
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="CadastroProduto.jsp">Cadastro de Produto</a> 
+							<a class="dropdown-item" href="produtos.jsp">Ver produtos</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"
+							style="font-size: 20px" > Funcion·rio 
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/AlmoxarifadoWeb/FuncionarioServlet?action=cadastro">Cadastro de Funcion·rios</a> 
+							<a class="dropdown-item" href="/AlmoxarifadoWeb/FuncionarioServlet?action=List_Funcionarios">Ver funcion·rios</a>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+
+	<script 
+		src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
 </body>
 </html>

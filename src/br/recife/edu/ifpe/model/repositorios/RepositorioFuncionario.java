@@ -30,6 +30,8 @@ public class RepositorioFuncionario {
     }
     
     public void create(Funcionario f){
+    	int count = funcionarios.size()+1;
+    	f.setCodigo(count);
         this.funcionarios.add(f);
     }
     
@@ -40,8 +42,7 @@ public class RepositorioFuncionario {
                 
                 aux.setDepartamento(f.getDepartamento());
                 aux.setNome(f.getNome());
-                return;
-                
+                return;                
             }
         }
         

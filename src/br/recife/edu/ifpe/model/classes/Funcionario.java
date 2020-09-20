@@ -14,8 +14,7 @@ public class Funcionario {
     public Funcionario() {
 	}    
 
-	public Funcionario(int codigo, String nome, String departamento) {
-		this.codigo = codigo;
+	public Funcionario(String nome, String departamento) {
 		this.nome = nome;
 		this.departamento = departamento;
 	}
