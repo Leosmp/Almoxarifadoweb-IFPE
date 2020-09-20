@@ -9,34 +9,32 @@ and open the template in the editor.
 <title>Almoxarifado Web - IFPE</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 </head>
 <body>
-	<h1>Almoxerifado Simples</h1>
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+		<div class="container">
+			<a href="index.html" class="navbar-brand">Almoxerifado Simples</a>
+			<div>
+				<ul>
+					<li style="margin-bottom: 5px;"><a href="CadastroProduto.jsp">Cadastro
+							de Produtos</a></li>
+					<li style="margin-bottom: 5px;"><a href="produtos.jsp">Ver
+							produtos</a></li>
+				</ul>
+			</div>
 
-	<div>
-		<ul>
-			<li style="margin-bottom: 5px;">
-				<a href="CadastroProduto.jsp">Cadastro de Produtos</a>
-			</li>
-			<li style="margin-bottom: 5px;">
-				<a href="produtos.jsp">Ver produtos</a>
-			</li>
-		</ul>
-	</div>
-
-	<div>
-		<ul>
-			<li style="margin-bottom: 5px;">
-				<a href="/AlmoxarifadoWeb/FuncionarioServlet?action=cadastro">Cadastro de Funcionários</a>
-			</li>
-			<li style="margin-bottom: 5px;">
-				<a href="/AlmoxarifadoWeb/FuncionarioServlet?action=List_Funcionarios">Ver funcionários</a>
-			</li>
-		</ul>
-	</div>
-
-
-
-
+			<div>
+				<ul>
+					<li style="margin-bottom: 5px;"><a
+						href="/AlmoxarifadoWeb/FuncionarioServlet?action=cadastro">Cadastro
+							de Funcionários</a></li>
+					<li style="margin-bottom: 5px;"><a
+						href="/AlmoxarifadoWeb/FuncionarioServlet?action=List_Funcionarios">Ver
+							funcionários</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 </body>
 </html>

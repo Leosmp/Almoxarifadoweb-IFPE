@@ -4,38 +4,41 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Cadastro de funcionários</title>
 </head>
+<link rel="stylesheet" href="bootstrap.min.css">
 <body>
-	<div>
-		<h1 style="margin-left: 10px;">Cadastro de Funcionários</h1>
+	<div class="container">
+		<h1>Cadastro de Funcionários</h1>
 
 		<form action="FuncionarioServlet" method="POST">
-			<div style="margin-left: 10px;">
-				<div style="padding-bottom: 5px;">
-					<label> Código: <input type="text" name="codigo"
+			<div class="form-group">
+				<div>
+					<label class="col-sm-1 col-form-label"> Código: </label>					
+					<input type="text" name="codigo" class="col-sm-11" 
 						value="${func.codigo }"
-						style="width: 100px;">
-					</label>
+						style="width: 100px;">					
 				</div>
-				<div style="padding-bottom: 5px;">
-					<label>Nome: <input type="text" name="nome"
+			<div>
+					<label class="col-sm-1 col-form-label">Nome: </label>
+					<input type="text" name="nome" class="col-sm-11"
 						placeholder="Insira o nome"
 						value="${func.nome }"
 						style="width: 250px;">
-					</label>
-				</div>
-				<div style="padding-bottom: 5px;">
-					<label>Departamento: <input type="text" name="departamento"
+					
+			</div>
+			<div>
+					<label class="col-sm-2 col-form-label">Departamento: </label>
+					<input type="text" name="departamento" class="col-sm-10"
 						placeholder="Insira o departarmento"
 						value="${func.departamento }"
 						style="width: 250px;">
-					</label>
-				</div>
+					
+			</div>
 				<input 	type="submit" 
-						value= "Cadastrar" name= "cadastro"	id="submit"				
-						style="height: 25px; margin-right: 15px;"> 
-				<input type="reset" value="Limpar" style="height: 25px;">
+						value= "Cadastrar" name= "cadastro"	id="submit"	class="btn btn-primary"> 
+				<input type="reset" value="Limpar" class="btn btn-primary">
 			</div>
 		</form>
 	</div>
