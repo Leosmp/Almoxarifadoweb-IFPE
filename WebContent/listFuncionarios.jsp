@@ -9,16 +9,19 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Listagem de Funcionários</title>
+
+<!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
 <body>
 	<jsp:include page="index.html"></jsp:include>
 	<div class="container-fluid">
-		<h3 class="text-primary col-md-3 mt-5">Funcionários Cadastrados</h3>
+		<h3 class="text-primary col-md-6 mt-5">Funcionários Cadastrados</h3>
 		<%
 			List<Funcionario> list = RepositorioFuncionario.getCurrentInstance().readAll();
 		%>		
 		<table class="table table-hover">
-			<thead class="thead-light">
+			<thead class="table-info">
 				<tr class="table-active">
 					<th >Código</th>
 					<th>Nome</th>
@@ -34,10 +37,14 @@
 					<td><%=f.getCodigo()%></td>
 					<td><%=f.getNome()%></td>
 					<td><%=f.getDepartamento()%></td>
-					<td><a
-						href="FuncionarioServlet?codigo=<%=f.getCodigo()%>&action=editar">Atualizar
-							| </a> <a href="#" onclick="deletar(<%=f.getCodigo()%>)">Deletar
-					</a></td>
+					<td>
+						<a href="FuncionarioServlet?codigo=<%=f.getCodigo()%>&action=editar" class="pr-3">
+							<i class="fas fa-edit"></i>
+						</a> 
+						<a href="#" onclick="deletar(<%=f.getCodigo()%>)" class="text-danger pl-3">
+							<i class="far fa-trash-alt"></i>
+						</a>
+					</td>
 				</tr>
 				<%
 					}

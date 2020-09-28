@@ -9,7 +9,7 @@
 <body>
 	<jsp:include page="index.html"></jsp:include>
 	<div class="container-fluid">
-		<h1 class="text-primary col-md-3 mt-5">Cadastro de Produtos</h1>
+		<h1 class="text-primary col-md-6 mt-5">Cadastro de Produtos</h1>
 
 		<form action="ProdutoServlet" method="POST">
 			<div class="form-row">

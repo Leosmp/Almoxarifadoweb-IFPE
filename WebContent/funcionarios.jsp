@@ -11,24 +11,24 @@
 <body>
 	<jsp:include page="index.html"></jsp:include>
 	<div class="container-fluid">
-		<h3 class="text-primary col-md-3 mt-5">Cadastro de Funcionários</h3>
+		<h4 class="text-primary col-md-6 mt-5">Cadastro de Funcionários</h4>
 
 		<form action="FuncionarioServlet" method="POST">
 			<div class="form-row">
 				<div class="form-group col-md-1">								
-					<input type="text" name="codigo" class="form-control" readonly="readonly"
+					<input type="text" name="codigo" class="form-control bg-light" readonly="readonly"
 						value="${func.codigo }">					
 				</div>
 			</div>
 			
 			<div class="form-row">
 				<div class="form-group col-md-3">					
-					<input type="text" name="nome" class="form-control"
+					<input type="text" name="nome" class="form-control bg-light"
 						placeholder="Insira o nome"
 						value="${func.nome }">					
 				</div>
 				<div class="form-group col-md-3">					
-					<input type="text" name="departamento" class="form-control"
+					<input type="text" name="departamento" class="form-control bg-light"
 						placeholder="Insira o departarmento"
 						value="${func.departamento }">					
 				</div>
