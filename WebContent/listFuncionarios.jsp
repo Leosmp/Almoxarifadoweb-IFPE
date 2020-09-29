@@ -1,20 +1,16 @@
-<%@page
-	import="br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario"%>
+<%@page	import="br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario"%>
 <%@page import="br.recife.edu.ifpe.model.classes.Funcionario"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@taglib uri='http://java.sun.com/jstl/core' prefix='c'%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Listagem de Funcionários</title>
-
-<!-- Font Awesome -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-</head>
 <body>
 	<jsp:include page="index.html"></jsp:include>
+	
 	<div class="container-fluid">
 		<h3 class="text-primary col-md-6 mt-5">Funcionários Cadastrados</h3>
 		<%
