@@ -60,4 +60,13 @@ public class LoteEntrada {
         this.itens.add(i);
     }
     
+    public int getQuantidadeTotal() {
+    	int qtd = 0;
+    	for(ItemEntrada x : itens) {
+    		qtd += x.getQuantidade();
+    	}
+    	
+    	return qtd;
+    }
+    
 }

@@ -21,4 +21,9 @@
 		<tag-class>br.recife.edu.ifpe.controller.tags.CarregaProdutosTag</tag-class>
 		<body-content>scriptless</body-content>		
 	</tag>
+	<tag>
+		<name>carregaloteentrada</name>
+		<tag-class>br.recife.edu.ifpe.controller.tags.CarregaLoteEntradaTag</tag-class>
+		<body-content>scriptless</body-content>		
+	</tag>
 </taglib>

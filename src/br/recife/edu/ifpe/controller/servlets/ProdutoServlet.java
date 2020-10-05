@@ -66,7 +66,7 @@ public class ProdutoServlet extends HttpServlet {
 
 			ItemEstoque itemEstoque = new ItemEstoque();
 			itemEstoque.setProduto(p);
-			itemEstoque.setQuantidade(0);
+			itemEstoque.adicionar(0);
 			itemEstoque.setCodigo(p.getCodigo());
 
 			RepositorioEstoque.getCurrentInstance().read().addItem(itemEstoque);
