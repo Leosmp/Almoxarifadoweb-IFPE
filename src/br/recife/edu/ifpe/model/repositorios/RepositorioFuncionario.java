@@ -30,8 +30,15 @@ public class RepositorioFuncionario {
     }
     
     public void create(Funcionario f){
-    	int count = funcionarios.size()+1;
-    	f.setCodigo(count);
+    	int count = 0;
+    	if(funcionarios.size()== 0) {
+    		count = 1;
+    		f.setCodigo(count);
+    	} else {
+    		Funcionario extra = funcionarios.get(funcionarios.size()-1);
+    		count = extra.getCodigo() + 1;
+    		f.setCodigo(count);
+    	}
         this.funcionarios.add(f);
     }
     
