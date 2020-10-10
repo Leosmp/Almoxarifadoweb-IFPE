@@ -16,7 +16,7 @@
 		<c:out value="${msg}"></c:out>
 	</p>
 
-	<ifpe:carregaritens carregar="produtos" />
+	<ifpe:carregarLista carregar="produtos"/>
 
 	<table class="table table-hover">
 		<thead class="table-info">

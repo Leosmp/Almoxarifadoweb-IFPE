@@ -23,7 +23,8 @@
 
 	<c:out value="${msg}" />
 	<c:remove var="msg" scope="session"/>
-	<ifpe:carregaritens carregar="loteentrada"/>
+	<ifpe:carregarLista carregar="loteentrada"/>
+
 
 	<table class="table table-hover">
 		<thead class="table-info">

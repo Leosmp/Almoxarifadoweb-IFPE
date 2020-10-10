@@ -63,7 +63,11 @@ public class Produto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-    
+
+	@Override
+	public String toString() {
+		return "Produto [codigo=" + codigo + ", nome=" + nome + ", marca=" + marca + ", categoria=" + categoria
+				+ ", descricao=" + descricao + "]";
+	}    
     
 }

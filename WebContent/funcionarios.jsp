@@ -9,7 +9,7 @@
 </head>
 
 <body>
-	<jsp:include page="index.html"></jsp:include>
+	<jsp:include page="index.html"/>
 	<div class="container-fluid">
 		<h4 class="text-primary col-md-6 mt-5">Cadastro de Funcionários</h4>
 

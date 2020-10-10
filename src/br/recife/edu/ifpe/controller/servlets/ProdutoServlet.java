@@ -11,8 +11,10 @@ import javax.servlet.http.HttpSession;
 
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.dao.DaoFactory;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
+import br.recife.edu.ifpe.model.repositorios.RepositorioProdutosJDBC;
 
 /**
  * Servlet implementation class ProdutoServlet
@@ -50,7 +52,7 @@ public class ProdutoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int codigo = Integer.parseInt(request.getParameter("codigo"));
+		
 		String nome = request.getParameter("nome");
 		String marca = request.getParameter("marca");
 		String categoria = request.getParameter("categoria");
@@ -58,11 +60,13 @@ public class ProdutoServlet extends HttpServlet {
 
 		String atualiza = request.getParameter("atualizar");
 
-		Produto p = new Produto(codigo, nome, marca, categoria, descricao);
+		Produto p = new Produto(null, nome, marca, categoria, descricao);
 		HttpSession session = request.getSession();
 
 		if (atualiza == null) {
-			RepositorioProdutos.getCurrentInstance().create(p);
+			RepositorioProdutosJDBC rep = DaoFactory.createProdutosJDBC();
+			
+			rep.insert(p);
 
 			ItemEstoque itemEstoque = new ItemEstoque();
 			itemEstoque.setProduto(p);
@@ -73,6 +77,8 @@ public class ProdutoServlet extends HttpServlet {
 			
 			session.setAttribute("msg", "Produto " + p.getNome() + " foi cadastrado!");
 		} else {
+			int codigo = Integer.parseInt(request.getParameter("codigo"));
+			p.setCodigo(codigo);
 			RepositorioProdutos.getCurrentInstance().update(p);
 			session.setAttribute("msg", "Produto " + p.getNome() + " foi atualizado!");
 		}
