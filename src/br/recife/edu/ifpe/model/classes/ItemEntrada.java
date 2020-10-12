@@ -35,6 +35,4 @@ public class ItemEntrada {
         this.quantidade = quantidade;
     }
     
-    
-    
 }

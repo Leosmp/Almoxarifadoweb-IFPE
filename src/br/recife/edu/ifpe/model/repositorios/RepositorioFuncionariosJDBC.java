@@ -11,7 +11,6 @@ import java.util.List;
 import br.recife.edu.ifpe.controller.db.DB;
 import br.recife.edu.ifpe.controller.db.DbException;
 import br.recife.edu.ifpe.model.classes.Funcionario;
-import br.recife.edu.ifpe.model.dao.DaoFactory;
 
 public class RepositorioFuncionariosJDBC {
 

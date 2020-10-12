@@ -11,8 +11,16 @@ public class ItemEstoque {
     private int codigo;
     private Produto produto;
     private int quantidade;
+    
+    public ItemEstoque() {
+	}
 
-    public int getCodigo() {
+    public ItemEstoque(Produto produto, int quantidade) {
+		this.produto = produto;
+		this.quantidade = quantidade;
+	}
+
+	public int getCodigo() {
         return codigo;
     }
 

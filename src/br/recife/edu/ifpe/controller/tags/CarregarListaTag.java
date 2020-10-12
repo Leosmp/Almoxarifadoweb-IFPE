@@ -7,12 +7,11 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import br.recife.edu.ifpe.model.classes.Estoque;
 import br.recife.edu.ifpe.model.classes.Funcionario;
+import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.dao.DaoFactory;
-import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 
 public class CarregarListaTag extends SimpleTagSupport{
@@ -44,8 +43,8 @@ public class CarregarListaTag extends SimpleTagSupport{
 		}
 		
 		if(carregar.equals("estoque")) {
-			Estoque estoque = RepositorioEstoque.getCurrentInstance().read();
-			getJspContext().setAttribute("estoque", estoque, PageContext.PAGE_SCOPE);
+			List<ItemEstoque> listaEstoque = DaoFactory.createEstoqueJDBC().findAll();
+			getJspContext().setAttribute("listaEstoque", listaEstoque, PageContext.PAGE_SCOPE);
 		}
 	}
 

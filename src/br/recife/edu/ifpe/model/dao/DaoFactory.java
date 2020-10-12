@@ -1,6 +1,7 @@
 package br.recife.edu.ifpe.model.dao;
 
 import br.recife.edu.ifpe.controller.db.DB;
+import br.recife.edu.ifpe.model.repositorios.RepositorioEstoqueJDBC;
 import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionariosJDBC;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutosJDBC;
 
@@ -12,5 +13,9 @@ public class DaoFactory {
 	
 	public static RepositorioFuncionariosJDBC createFuncionariosJDBC() {
 		return new RepositorioFuncionariosJDBC(DB.getConnection());
+	}
+	
+	public static RepositorioEstoqueJDBC createEstoqueJDBC() {
+		return new RepositorioEstoqueJDBC(DB.getConnection());
 	}
 }

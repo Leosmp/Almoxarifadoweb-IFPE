@@ -14,7 +14,7 @@
 
 	<h3 class="text-primary col-md-6 mt-5">Produtos no estoque</h3>
 
-	<table class="table table-hover">
+	<table class="table table-hover ml-2 mr-2">
 		<thead class="table-info">
 			<tr class="table-active">
 				<th>Código</th>
@@ -23,7 +23,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="item" items="${estoque.itens}">
+			<c:forEach var="item" items="${listaEstoque}">
 				<tr>
 					<td><c:out value="${item.codigo}"/></td>
 					<td><c:out value="${item.produto.nome}"/></td>

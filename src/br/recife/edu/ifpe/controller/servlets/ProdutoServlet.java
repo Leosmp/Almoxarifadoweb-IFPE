@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.dao.DaoFactory;
-import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 
 /**
  * Servlet implementation class ProdutoServlet
@@ -65,12 +64,8 @@ public class ProdutoServlet extends HttpServlet {
 			
 			DaoFactory.createProdutosJDBC().insert(p);
 
-			ItemEstoque itemEstoque = new ItemEstoque();
-			itemEstoque.setProduto(p);
-			itemEstoque.adicionar(0);
-			itemEstoque.setCodigo(p.getCodigo());
-
-			RepositorioEstoque.getCurrentInstance().read().addItem(itemEstoque);
+			ItemEstoque itemEstoque = new ItemEstoque(p,0);
+			DaoFactory.createEstoqueJDBC().insert(itemEstoque); 
 			
 			session.setAttribute("msg", "Produto " + p.getNome() + " foi cadastrado!");
 		} else {

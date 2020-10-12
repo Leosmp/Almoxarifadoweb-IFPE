@@ -12,9 +12,7 @@
 	<jsp:include page="index.html"></jsp:include>
 	<h4 class="mt-3">Cadastro de lote de entrada</h4>
 
-	<p>
-		<c:out value="${msg}"></c:out>
-	</p>
+	<p><c:out value="${msg}"/></p>
 
 	<ifpe:carregarLista carregar="produtos"/>
 
@@ -25,7 +23,7 @@
 				<th>Nome</th>
 				<th>Marca</th>
 				<th>Categoria</th>
-				<th colspan="2">Operações</th>
+				<th>Operações</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,10 +33,10 @@
 					<td>${pAux.nome}</td>
 					<td>${pAux.marca}</td>
 					<td>${pAux.categoria}</td>
-					<td><a href="#" class="text-dark pl-3"
-						onclick="inserir(${pAux.codigo})"> <i
-							class="fas fa-plus-square"></i>
-					</a></td>
+					<td><a 	href="#" class="text-dark pl-3" onclick="inserir(${pAux.codigo})"> 
+							<i class="fas fa-plus-square"></i>
+						</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -104,8 +102,7 @@
 					location.reload();
 					}else{
 						location.href = "listaLoteEntrada.jsp";
-						}
-						
+						}				
 				
 		}).catch(function(erro){
 				location.reload();
