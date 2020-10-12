@@ -1,3 +1,4 @@
+<%@page import="br.recife.edu.ifpe.model.dao.DaoFactory"%>
 <%@page import="br.recife.edu.ifpe.model.classes.Produto"%>
 <%@page
 	import="br.recife.edu.ifpe.model.repositorios.RepositorioProdutos"%>
@@ -41,7 +42,7 @@
 		</div>
 
 		<%
-			List<Produto> produtos = RepositorioProdutos.getCurrentInstance().readAll();
+			List<Produto> produtos = DaoFactory.createProdutosJDBC().findAll();
 		%>
 
 		<table class="table table-hover">

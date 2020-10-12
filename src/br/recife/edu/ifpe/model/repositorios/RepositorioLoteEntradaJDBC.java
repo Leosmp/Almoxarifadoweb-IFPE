@@ -10,27 +10,26 @@ import java.util.List;
 
 import br.recife.edu.ifpe.controller.db.DB;
 import br.recife.edu.ifpe.controller.db.DbException;
-import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.classes.Funcionario;
+import br.recife.edu.ifpe.model.dao.DaoFactory;
 
-public class RepositorioProdutosJDBC {
+public class RepositorioLoteEntradaJDBC {
 
 	private Connection conn;
 	
-	public RepositorioProdutosJDBC(Connection conn) {
+	public RepositorioLoteEntradaJDBC(Connection conn) {
 		this.conn = conn;
 	}
 
-	public void insert(Produto p) {
+	public void insert(Funcionario func) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO tb_produto(nome, marca, categoria, descricao) VALUES (?, ?, ?, ?)",
+					"INSERT INTO tb_funcionario(nome, departamento) VALUES (?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			st.setString(1, p.getNome());
-			st.setString(2, p.getMarca());
-			st.setString(3, p.getCategoria());
-			st.setString(4, p.getDescricao());
+			st.setString(1, func.getNome());
+			st.setString(2, func.getDepartamento());
 
 			int rowsAffected = st.executeUpdate();
 
@@ -38,7 +37,7 @@ public class RepositorioProdutosJDBC {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
 					int id = rs.getInt(1);
-					p.setCodigo(id);
+					func.setCodigo(id);
 				}
 				DB.closeResultSet(rs);
 			} else {
@@ -51,17 +50,15 @@ public class RepositorioProdutosJDBC {
 		}
 	}
 	
-	public void update(Produto p) {
+	public void update(Funcionario func) {
 
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE tb_produto SET nome = ?, marca = ?, categoria = ?, descricao = ? WHERE codigo = ?");
+			st = conn.prepareStatement("UPDATE tb_funcionario SET nome = ?, departamento = ? WHERE codigo = ?");
 			
-			st.setString(1, p.getNome());
-			st.setString(2, p.getMarca());
-			st.setString(3, p.getCategoria());
-			st.setString(4, p.getDescricao());
-			st.setInt(5, p.getCodigo());
+			st.setString(1, func.getNome());
+			st.setString(2, func.getDepartamento());
+			st.setInt(3, func.getCodigo());
 			
 			st.executeUpdate();	
 			
@@ -76,7 +73,7 @@ public class RepositorioProdutosJDBC {
 		PreparedStatement st = null;
 		
 		try {
-			st = conn.prepareStatement("DELETE from tb_produto WHERE codigo = ?");
+			st = conn.prepareStatement("DELETE from tb_funcionario WHERE codigo = ?");
 			
 			st.setInt(1, codigo);
 			
@@ -87,26 +84,25 @@ public class RepositorioProdutosJDBC {
 			DB.closeStatement(st);
 		}
 	}
-
 	
-	public Produto findById(Integer id) {
+	public Funcionario findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		
 		try {
 			st = conn.prepareStatement(
-					"SELECT * FROM tb_produto WHERE codigo = ?");
+					"SELECT * FROM tb_funcionario WHERE codigo = ?");
 			
 			st.setInt(1, id);
 			
 			rs = st.executeQuery();
 			
 			if(rs.next()) {
-				Produto prod = instantiateProduto(rs);
+				Funcionario prod = instantiateFuncionario(rs);
 				
 				return prod;
 			} else {
-				throw new DbException("Produto não encontrado!");
+				throw new DbException("Funcionario não encontrado!");
 			}
 			
 		} catch (SQLException e) {
@@ -117,18 +113,18 @@ public class RepositorioProdutosJDBC {
 		}
 	}
 	
-	public List<Produto> findAll(){
+	public List<Funcionario> findAll(){
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		List<Produto> list = new ArrayList<>();
+		List<Funcionario> list = new ArrayList<>();
 		
 		try {
-			st = conn.prepareStatement("SELECT * FROM tb_produto");
+			st = conn.prepareStatement("SELECT * FROM tb_funcionario");
 			rs = st.executeQuery();
 			
 			while(rs.next()) {
-				Produto prod = instantiateProduto(rs);
-				list.add(prod);
+				Funcionario func = instantiateFuncionario(rs);
+				list.add(func);
 			}			
 			return list;
 			
@@ -141,13 +137,11 @@ public class RepositorioProdutosJDBC {
 		}
 	}
 	
-	private Produto instantiateProduto(ResultSet rs) throws SQLException{
-		Produto p = new Produto();
-		p.setCodigo(rs.getInt("codigo"));
-		p.setNome(rs.getString("nome"));
-		p.setMarca(rs.getString("marca"));
-		p.setCategoria(rs.getString("categoria"));
-		p.setDescricao(rs.getString("descricao"));
-		return p;
+	private Funcionario instantiateFuncionario(ResultSet rs) throws SQLException{
+		Funcionario func = new Funcionario();
+		func.setCodigo(rs.getInt("codigo"));
+		func.setNome(rs.getString("nome"));
+		func.setDepartamento(rs.getString("departamento"));
+		return func;
 	}
 }

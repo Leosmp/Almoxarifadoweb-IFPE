@@ -13,8 +13,6 @@ import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.dao.DaoFactory;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
-import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
-import br.recife.edu.ifpe.model.repositorios.RepositorioProdutosJDBC;
 
 /**
  * Servlet implementation class ProdutoServlet
@@ -39,7 +37,7 @@ public class ProdutoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
 
-		Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+		Produto p = DaoFactory.createProdutosJDBC().findById(codigo);
 		request.setAttribute("produto", p);
 
 		getServletContext().getRequestDispatcher("/produtos.jsp").forward(request, response);
@@ -64,9 +62,8 @@ public class ProdutoServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		if (atualiza == null) {
-			RepositorioProdutosJDBC rep = DaoFactory.createProdutosJDBC();
 			
-			rep.insert(p);
+			DaoFactory.createProdutosJDBC().insert(p);
 
 			ItemEstoque itemEstoque = new ItemEstoque();
 			itemEstoque.setProduto(p);
@@ -79,7 +76,7 @@ public class ProdutoServlet extends HttpServlet {
 		} else {
 			int codigo = Integer.parseInt(request.getParameter("codigo"));
 			p.setCodigo(codigo);
-			RepositorioProdutos.getCurrentInstance().update(p);
+			DaoFactory.createProdutosJDBC().update(p);
 			session.setAttribute("msg", "Produto " + p.getNome() + " foi atualizado!");
 		}
 
@@ -92,8 +89,8 @@ public class ProdutoServlet extends HttpServlet {
 		
 		int codigo = Integer.parseInt(req.getParameter("codigo"));
 		
-		Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
-		RepositorioProdutos.getCurrentInstance().delete(p);
+		Produto p = DaoFactory.createProdutosJDBC().findById(codigo);
+		DaoFactory.createProdutosJDBC().delete(codigo);
 		
 		HttpSession session = req.getSession();
 		

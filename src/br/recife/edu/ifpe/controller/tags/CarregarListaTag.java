@@ -11,10 +11,9 @@ import br.recife.edu.ifpe.model.classes.Estoque;
 import br.recife.edu.ifpe.model.classes.Funcionario;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.dao.DaoFactory;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
-import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
-import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 
 public class CarregarListaTag extends SimpleTagSupport{
 	
@@ -30,7 +29,7 @@ public class CarregarListaTag extends SimpleTagSupport{
 		super.doTag();
 		
 		if(carregar.equals("produtos")) {
-			List<Produto> produtos = RepositorioProdutos.getCurrentInstance().readAll();
+			List<Produto> produtos = DaoFactory.createProdutosJDBC().findAll();
 			getJspContext().setAttribute("produtos", produtos, PageContext.PAGE_SCOPE);
 		}
 		
@@ -40,7 +39,7 @@ public class CarregarListaTag extends SimpleTagSupport{
 		}
 		
 		if(carregar.equals("funcionario")) {
-			List<Funcionario> listFuncionario = RepositorioFuncionario.getCurrentInstance().readAll();
+			List<Funcionario> listFuncionario = DaoFactory.createFuncionariosJDBC().findAll();
 			getJspContext().setAttribute("listFuncionario", listFuncionario, PageContext.PAGE_SCOPE);
 		}
 		

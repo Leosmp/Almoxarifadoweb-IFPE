@@ -15,9 +15,9 @@ import br.recife.edu.ifpe.model.classes.ItemEntrada;
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.dao.DaoFactory;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
-import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 
 /**
  * Servlet implementation class LoteEntradaServlet
@@ -143,7 +143,7 @@ public class LoteEntradaServlet extends HttpServlet {
 		if (!controle) {
 			ItemEntrada item = new ItemEntrada();
 
-			Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+			Produto p = DaoFactory.createProdutosJDBC().findById(codigo);
 
 			item.setProduto(p);
 			item.setCodigo((int) Math.random() * 10000);

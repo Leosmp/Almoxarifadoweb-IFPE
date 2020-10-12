@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.recife.edu.ifpe.model.classes.Funcionario;
-import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
+import br.recife.edu.ifpe.model.dao.DaoFactory;
 
 /**
  * Servlet implementation class FuncionarioServlet
@@ -40,7 +40,7 @@ public class FuncionarioServlet extends HttpServlet {
 		} else if(action.equals("editar")) {
 			forward = "/funcionarios.jsp";
 			int codigo = Integer.parseInt(request.getParameter("codigo"));
-			Funcionario func = RepositorioFuncionario.getCurrentInstance().read(codigo);
+			Funcionario func = DaoFactory.createFuncionariosJDBC().findById(codigo);
 			request.setAttribute("func", func);
 		} else if(action.equals("cadastro")) {
 			forward = "/funcionarios.jsp";
@@ -63,12 +63,12 @@ public class FuncionarioServlet extends HttpServlet {
 		String action = request.getParameter("editar");
 		
 		if(action == null) {
-			RepositorioFuncionario.getCurrentInstance().create(func);
+			DaoFactory.createFuncionariosJDBC().insert(func);
 			session.setAttribute("msg", "Funcionário " + func.getNome() + " foi cadastrado!");			
 		} else if(action.equals("Editar")) {
 			int codigo = Integer.parseInt(request.getParameter("codigo"));
 			func.setCodigo(codigo);
-			RepositorioFuncionario.getCurrentInstance().update(func);			
+			DaoFactory.createFuncionariosJDBC().update(func);			
 			session.setAttribute("msg", "Funcionário " + func.getNome() + " foi atualizado!");
 		} 		
 		response.sendRedirect("listFuncionarios.jsp");
@@ -79,8 +79,7 @@ public class FuncionarioServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
 		
-		Funcionario func = RepositorioFuncionario.getCurrentInstance().read(codigo);
-		RepositorioFuncionario.getCurrentInstance().delete(func);		
+		DaoFactory.createFuncionariosJDBC().delete(codigo);
 	}
 
 }
