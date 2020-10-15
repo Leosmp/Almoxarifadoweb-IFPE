@@ -97,7 +97,13 @@ public class RepositorioItemEntradaJDBC {
 		
 		try {
 			st = conn.prepareStatement(
-					"SELECT * FROM tb_item_entrada WHERE codigo = ?");
+					"SELECT tb_item_entrada.codigo, tb_item_entrada.quantidade, "
+							+ "tb_produto.nome, tb_produto.marca, tb_produto.categoria, tb_produto.descricao"
+							+ "tb_lote_entrada.*"
+							+ "FROM tb_item_entrada "
+							+ "INNER JOIN tb_produto ON tb_produto_codigo = tb_produto.codigo"
+							+ "INNER JOIN tb_lote_entrada ON tb_lote_entrada_codigo = tb_lote_entrada.codigo"
+							+ "Where codigo = ?");
 			
 			st.setInt(1, id);
 			
@@ -121,15 +127,22 @@ public class RepositorioItemEntradaJDBC {
 		}
 	}
 	
-	public List<ItemEntrada> findAll(){
+	public  List<ItemEntrada> findItensDoLote(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		
 		try {
-			st = conn.prepareStatement("SELECT tb_item_entrada.*, tb_produto.nome, tb_produto.marca, tb_produto.categoria, tb_produto.descricao "
-										+ "FROM tb_item_entrada "
-										+ "INNER JOIN tb_produto "
-										+ "ON tb_item_entrada.fk_produto = tb_produto.codigo");
+			st = conn.prepareStatement(
+					"SELECT 	tb_item_entrada.*,\r\n" + 
+					"		tb_produto.nome, tb_produto.marca, tb_produto.categoria, tb_produto.descricao, \r\n" + 
+					"        tb_lote_entrada.data \r\n" + 
+					"from tb_item_entrada\r\n" + 
+					"INNER JOIN tb_produto ON tb_item_entrada.tb_produto_codigo = tb_produto.codigo\r\n" + 
+					"INNER JOIN tb_lote_entrada ON tb_item_entrada.tb_lote_entrada_codigo = tb_lote_entrada.codigo\r\n" + 
+					"where tb_item_entrada.tb_lote_entrada_codigo = ?");
+			
+			st.setInt(1, id);
+			
 			rs = st.executeQuery();
 			
 			Map<Integer, Produto> mapProduto = new HashMap<>();
@@ -151,8 +164,54 @@ public class RepositorioItemEntradaJDBC {
 					mapLoteEntrada.put(rs.getInt("tb_lote_entrada_codigo"), loteEntrada);
 				}
 				
-				ItemEntrada itemEstoque = instantiateItemEntrada(rs, prod, loteEntrada);
-				list.add(itemEstoque);	
+				ItemEntrada itemEntrada = instantiateItemEntrada(rs, prod, loteEntrada);
+				list.add(itemEntrada);			
+			} 
+			
+			return list;
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
+	
+	public List<ItemEntrada> findAll(){
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			st = conn.prepareStatement("SELECT 	tb_item_entrada.*, " + 
+					"tb_produto.nome, tb_produto.marca, tb_produto.categoria, tb_produto.descricao, " + 
+					"tb_lote_entrada.data " + 
+					"from tb_item_entrada " + 
+					"INNER JOIN tb_produto ON tb_item_entrada.tb_produto_codigo = tb_produto.codigo " + 
+					"INNER JOIN tb_lote_entrada ON tb_item_entrada.tb_lote_entrada_codigo = tb_lote_entrada.codigo");
+			rs = st.executeQuery();
+			
+			Map<Integer, Produto> mapProduto = new HashMap<>();
+			Map<Integer, LoteEntrada> mapLoteEntrada = new HashMap<>();
+			List<ItemEntrada> list = new ArrayList<>();
+			
+			while(rs.next()) {
+				Produto prod = mapProduto.get(rs.getInt("tb_produto_codigo"));
+				LoteEntrada loteEntrada = mapLoteEntrada.get(rs.getInt("tb_lote_entrada_codigo"));
+				
+				
+				if(prod == null) {
+					prod = instantiateProduto(rs);
+					mapProduto.put(rs.getInt("tb_produto_codigo"), prod);
+				}
+				
+				if(loteEntrada == null) {
+					loteEntrada = instantiateLoteEntrada(rs);
+					mapLoteEntrada.put(rs.getInt("tb_lote_entrada_codigo"), loteEntrada);
+				}
+				
+				ItemEntrada itemEntrada = instantiateItemEntrada(rs, prod, loteEntrada);
+				list.add(itemEntrada);	
 			}			
 			return list;
 			
@@ -166,11 +225,12 @@ public class RepositorioItemEntradaJDBC {
 	}
 	
 	private ItemEntrada instantiateItemEntrada(ResultSet rs, Produto produto, LoteEntrada loteEntrada) throws SQLException{
-		ItemEntrada itemEstoque = new ItemEntrada();
-		itemEstoque.setCodigo(rs.getInt("codigo"));
-		itemEstoque.setProduto(produto);
-		itemEstoque.setQuantidade(rs.getInt("quantidade"));
-		return itemEstoque;
+		ItemEntrada itemEntrada = new ItemEntrada();
+		itemEntrada.setCodigo(rs.getInt("codigo"));
+		itemEntrada.setProduto(produto);
+		itemEntrada.setQuantidade(rs.getInt("quantidade"));
+		itemEntrada.setLoteEntrada(loteEntrada);
+		return itemEntrada;
 	}
 	
 	private Produto instantiateProduto(ResultSet rs) throws SQLException{
@@ -185,9 +245,8 @@ public class RepositorioItemEntradaJDBC {
 	
 	private LoteEntrada instantiateLoteEntrada(ResultSet rs) throws SQLException{
 		LoteEntrada loteEntrada = new LoteEntrada();
-		loteEntrada.setCodigo(rs.getInt("codigo"));
+		loteEntrada.setCodigo(rs.getInt("tb_lote_entrada_codigo"));
 		loteEntrada.setData(new java.util.Date(rs.getTimestamp("data").getTime()));
-		loteEntrada.setQuantidadeTotal(rs.getInt("quantidadeTotal"));
 		return loteEntrada;
 	}
 }

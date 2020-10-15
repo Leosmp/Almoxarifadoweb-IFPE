@@ -15,7 +15,6 @@ public class LoteEntrada {
     private List<ItemEntrada> itens;
     private Date data;
     private String descricao;
-    private int quantidadeTotal;
     
     public LoteEntrada(){
         this.itens = new ArrayList<>();
@@ -67,8 +66,11 @@ public class LoteEntrada {
     	return qtd;
     }
 
-	public void setQuantidadeTotal(int quantidadeTotal) {
-		this.quantidadeTotal = quantidadeTotal;
+	@Override
+	public String toString() {
+		return "LoteEntrada [codigo=" + codigo + ", itens=" + itens + ", data=" + data + ", descricao=" + descricao
+				+ "]";
 	}
+    
     
 }

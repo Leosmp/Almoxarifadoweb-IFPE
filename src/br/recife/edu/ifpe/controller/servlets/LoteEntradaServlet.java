@@ -47,7 +47,7 @@ public class LoteEntradaServlet extends HttpServlet {
 		LoteEntrada loteEntrada = RepositorioLoteEntrada.getCurrentInstance().read(codigo);
 
 		String responseJSON = "{\"codigo\":" + loteEntrada.getCodigo() + "," + "\"descricao\":\""
-				+ loteEntrada.getDescricao() + "\",\"itens\":[";
+								+ loteEntrada.getDescricao() + "\",\"itens\":[";
 		for (ItemEntrada item : loteEntrada.getItens()) {
 			responseJSON 	+= "{\"codigo\":" + item.getCodigo() 
 							+ ",\"nomeProduto\":\"" + item.getProduto().getNome()
@@ -89,6 +89,7 @@ public class LoteEntradaServlet extends HttpServlet {
 		for (ItemEntrada x : loteEntrada.getItens()) {
 			for (ItemEstoque y : listaEstoque) {
 				if (x.getProduto().getCodigo() == y.getProduto().getCodigo()) {
+					DaoFactory.createEstoqueJDBC().findById(y.getCodigo());
 					y.adicionar(x.getQuantidade());
 					DaoFactory.createEstoqueJDBC().update(y);
 					break;
@@ -99,10 +100,9 @@ public class LoteEntradaServlet extends HttpServlet {
 		DaoFactory.createLoteEntradaJDBC().insert(loteEntrada);
 		
 		for (ItemEntrada x : loteEntrada.getItens()) {
+			x.setLoteEntrada(loteEntrada);
 			DaoFactory.createItemEntradaJDBC().insert(x);
 		}
-
-		RepositorioLoteEntrada.getCurrentInstance().create(loteEntrada);
 
 		session.removeAttribute("loteEntrada");
 

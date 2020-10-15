@@ -1,6 +1,7 @@
 package br.recife.edu.ifpe.controller.tags;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.JspException;
@@ -8,11 +9,11 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import br.recife.edu.ifpe.model.classes.Funcionario;
+import br.recife.edu.ifpe.model.classes.ItemEntrada;
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.dao.DaoFactory;
-import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 
 public class CarregarListaTag extends SimpleTagSupport{
 	
@@ -33,7 +34,7 @@ public class CarregarListaTag extends SimpleTagSupport{
 		}
 		
 		if(carregar.equals("loteentrada")) {
-			List<LoteEntrada> listLote = RepositorioLoteEntrada.getCurrentInstance().readAll();
+			List<LoteEntrada> listLote = DaoFactory.createLoteEntradaJDBC().findAll();
 			getJspContext().setAttribute("listaLoteEntrada", listLote,PageContext.PAGE_SCOPE);
 		}
 		
@@ -47,5 +48,4 @@ public class CarregarListaTag extends SimpleTagSupport{
 			getJspContext().setAttribute("listaEstoque", listaEstoque, PageContext.PAGE_SCOPE);
 		}
 	}
-
 }

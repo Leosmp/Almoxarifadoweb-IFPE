@@ -19,7 +19,7 @@ private static final String PASSWORD = "1234567";
 		if(conn == null) {
 			try {
 				try {
-					Class.forName("com.mysql.jdbc.Driver");
+					Class.forName("com.mysql.cj.jdbc.Driver");
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

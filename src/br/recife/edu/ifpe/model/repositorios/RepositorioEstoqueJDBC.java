@@ -60,7 +60,7 @@ public class RepositorioEstoqueJDBC {
 			
 			st.setInt(1, itemEstoque.getProduto().getCodigo());
 			st.setInt(2, itemEstoque.getQuantidade());
-			st.setInt(5, itemEstoque.getCodigo());
+			st.setInt(3, itemEstoque.getCodigo());
 			
 			st.executeUpdate();	
 			
@@ -88,13 +88,17 @@ public class RepositorioEstoqueJDBC {
 	}
 
 	
-	public Produto findById(Integer id) {
+	public ItemEstoque findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		
 		try {
 			st = conn.prepareStatement(
-					"SELECT * FROM tb_item_estoque WHERE codigo = ?");
+					"SELECT tb_item_estoque.*, tb_produto.nome, tb_produto.marca, tb_produto.categoria, tb_produto.descricao "
+					+ "FROM tb_item_estoque "
+					+ "INNER JOIN tb_produto "
+					+ "ON tb_item_estoque.tb_produto_codigo = tb_produto.codigo "
+					+ "WHERE tb_item_estoque.codigo = ?");
 			
 			st.setInt(1, id);
 			
@@ -102,8 +106,9 @@ public class RepositorioEstoqueJDBC {
 			
 			if(rs.next()) {
 				Produto prod = instantiateProduto(rs);
+				ItemEstoque itemEstoque = instantiateItemEstoque(rs, prod);
 				
-				return prod;
+				return itemEstoque;
 			} else {
 				throw new DbException("Produto não encontrado!");
 			}

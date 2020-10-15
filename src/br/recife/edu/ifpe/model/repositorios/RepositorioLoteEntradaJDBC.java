@@ -15,7 +15,9 @@ import java.util.List;
 
 import br.recife.edu.ifpe.controller.db.DB;
 import br.recife.edu.ifpe.controller.db.DbException;
+import br.recife.edu.ifpe.model.classes.ItemEntrada;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
+import br.recife.edu.ifpe.model.dao.DaoFactory;
 
 public class RepositorioLoteEntradaJDBC {
 
@@ -29,11 +31,10 @@ public class RepositorioLoteEntradaJDBC {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO tb_lote_entrada(data, quantidadeTotal) VALUES (?, ?)",
+					"INSERT INTO tb_lote_entrada(data) VALUES (?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setDate(1, new java.sql.Date(loteEntrada.getData().getTime()));
-			st.setInt(2, loteEntrada.getQuantidadeTotal());
 
 			int rowsAffected = st.executeUpdate();
 
@@ -58,11 +59,10 @@ public class RepositorioLoteEntradaJDBC {
 
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE tb_lote_entrada SET data = ?, quantidadeTotal = ? WHERE codigo = ?");
+			st = conn.prepareStatement("UPDATE tb_lote_entrada SET data = ? WHERE codigo = ?");
 			
 			st.setDate(1, new java.sql.Date(loteEntrada.getData().getTime()));
-			st.setInt(2, loteEntrada.getQuantidadeTotal());
-			st.setInt(3, loteEntrada.getCodigo());
+			st.setInt(2, loteEntrada.getCodigo());
 			
 			st.executeUpdate();	
 			
@@ -120,7 +120,7 @@ public class RepositorioLoteEntradaJDBC {
 	public List<LoteEntrada> findAll(){
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		List<LoteEntrada> list = new ArrayList<>();
+		List<LoteEntrada> list = new ArrayList<>();		
 		
 		try {
 			st = conn.prepareStatement("SELECT * FROM tb_lote_entrada");
@@ -143,9 +143,10 @@ public class RepositorioLoteEntradaJDBC {
 	
 	private LoteEntrada instantiateLoteEntrada(ResultSet rs) throws SQLException{
 		LoteEntrada loteEntrada = new LoteEntrada();
+		List<ItemEntrada> listItemEntrada = DaoFactory.createItemEntradaJDBC().findItensDoLote(rs.getInt("codigo"));
 		loteEntrada.setCodigo(rs.getInt("codigo"));
 		loteEntrada.setData(new java.util.Date(rs.getTimestamp("data").getTime()));
-		loteEntrada.setQuantidadeTotal(rs.getInt("quantidadeTotal"));
+		loteEntrada.setItens(listItemEntrada);
 		return loteEntrada;
 	}
 }

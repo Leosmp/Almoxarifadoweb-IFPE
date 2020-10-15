@@ -43,5 +43,13 @@ public class ItemEntrada {
 	public void setLoteEntrada(LoteEntrada loteEntrada) {
 		this.loteEntrada = loteEntrada;
 	}
+
+	@Override
+	public String toString() {
+		return "ItemEntrada [codigo=" + codigo + ", produto=" + produto + ", quantidade=" + quantidade
+				+ ", loteEntrada=" + loteEntrada + "]";
+	}
+	
+	
     
 }

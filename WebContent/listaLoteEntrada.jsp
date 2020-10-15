@@ -40,7 +40,7 @@
 				<tr>
 					<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.data}" type="date"/></td>
 					<td>${item.codigo}</td>
-					<td>${item.quantidadeTotal }</td>
+					<td>${item.quantidadeTotal}</td>
 					<td>
 						<a href='#' onclick="carregarItens(${item.codigo})">visualiza itens</a>
 					</td>
