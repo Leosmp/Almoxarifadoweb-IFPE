@@ -2,6 +2,7 @@ package br.recife.edu.ifpe.controller.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -71,7 +72,7 @@ public class LoteEntradaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(); //informação vinda do put
 		LoteEntrada loteEntrada = (LoteEntrada) session.getAttribute("loteEntrada");
 
 		for (ItemEntrada x : loteEntrada.getItens()) {
@@ -82,16 +83,23 @@ public class LoteEntradaServlet extends HttpServlet {
 				return;
 			}
 		}
-
-		Estoque estoque = RepositorioEstoque.getCurrentInstance().read();
+		
+		List<ItemEstoque> listaEstoque = DaoFactory.createEstoqueJDBC().findAll();
 
 		for (ItemEntrada x : loteEntrada.getItens()) {
-			for (ItemEstoque y : estoque.getItens()) {
+			for (ItemEstoque y : listaEstoque) {
 				if (x.getProduto().getCodigo() == y.getProduto().getCodigo()) {
 					y.adicionar(x.getQuantidade());
+					DaoFactory.createEstoqueJDBC().update(y);
 					break;
 				}
 			}
+		}
+		
+		DaoFactory.createLoteEntradaJDBC().insert(loteEntrada);
+		
+		for (ItemEntrada x : loteEntrada.getItens()) {
+			DaoFactory.createItemEntradaJDBC().insert(x);
 		}
 
 		RepositorioLoteEntrada.getCurrentInstance().create(loteEntrada);

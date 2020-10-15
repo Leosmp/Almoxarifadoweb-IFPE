@@ -10,6 +10,7 @@ public class ItemEntrada {
     private int codigo;
     private Produto produto;
     private int quantidade;
+    private LoteEntrada loteEntrada;
 
     public int getCodigo() {
         return codigo;
@@ -34,5 +35,13 @@ public class ItemEntrada {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+	public LoteEntrada getLoteEntrada() {
+		return loteEntrada;
+	}
+
+	public void setLoteEntrada(LoteEntrada loteEntrada) {
+		this.loteEntrada = loteEntrada;
+	}
     
 }

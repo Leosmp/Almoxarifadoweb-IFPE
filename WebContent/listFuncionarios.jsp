@@ -1,4 +1,3 @@
-<%@page	import="br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario"%>
 <%@page import="br.recife.edu.ifpe.model.classes.Funcionario"%>
 <%@page import="java.util.List"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>

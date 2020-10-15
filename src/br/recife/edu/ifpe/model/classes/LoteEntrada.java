@@ -14,10 +14,8 @@ public class LoteEntrada {
     private int codigo;
     private List<ItemEntrada> itens;
     private Date data;
-    /*
-    * Neste campo ficarão armazenadas as informações de documentos
-    */
     private String descricao;
+    private int quantidadeTotal;
     
     public LoteEntrada(){
         this.itens = new ArrayList<>();
@@ -68,5 +66,9 @@ public class LoteEntrada {
     	
     	return qtd;
     }
+
+	public void setQuantidadeTotal(int quantidadeTotal) {
+		this.quantidadeTotal = quantidadeTotal;
+	}
     
 }

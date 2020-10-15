@@ -10,7 +10,7 @@ public class DB {
 	
 private static Connection conn = null;
 
-private static final String URL = "jdbc:mysql://localhost:3306/almoxarifado_web?useSSL=false";
+private static final String URL = "jdbc:mysql://localhost:3306/almoxarifadoweb?useSSL=false&useTimezone=true&serverTimezone=UTC";
 private static final String USER = "leonardo";
 private static final String PASSWORD = "1234567";
 

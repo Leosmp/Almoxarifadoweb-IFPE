@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="index.html"></jsp:include>
+	<jsp:include page="index.html"/>
 	<h4 class="mt-3">Cadastro de lote de entrada</h4>
 
 	<p><c:out value="${msg}"/></p>

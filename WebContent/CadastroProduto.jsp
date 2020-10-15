@@ -14,7 +14,7 @@
 		<form action="ProdutoServlet" method="POST">
 			<div class="form-row">
 				<div class="form-group col-md-1">
-					<input type="text" name="codigo"
+					<input type="text" name="codigo" readonly="readonly"
 						value="${(param.redirect != null && param['redirect'] eq 'atualiza')? produto.codigo : ''}"
 						class="form-control">
 				</div>

@@ -1,7 +1,5 @@
 <%@page import="br.recife.edu.ifpe.model.dao.DaoFactory"%>
 <%@page import="br.recife.edu.ifpe.model.classes.Produto"%>
-<%@page
-	import="br.recife.edu.ifpe.model.repositorios.RepositorioProdutos"%>
 <%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
