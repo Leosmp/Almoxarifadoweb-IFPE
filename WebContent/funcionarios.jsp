@@ -11,12 +11,12 @@
 <body>
 	<jsp:include page="index.html"/>
 	<div class="container-fluid">
-		<h4 class="text-primary col-md-6 mt-5">Cadastro de Funcionários</h4>
+		<h4 class="text-primary col-md-6 mt-3">Cadastro de Funcionários</h4>
 
 		<form action="FuncionarioServlet" method="POST">
 			<div class="form-row">
 				<div class="form-group col-md-1">								
-					<input type="text" name="codigo" class="form-control bg-light" readonly="readonly"
+					<input type="text" name="codigo" class="form-control" readonly="readonly"
 						value="${func.codigo }">					
 				</div>
 			</div>

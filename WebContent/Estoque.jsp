@@ -19,6 +19,8 @@
 			<tr class="table-active">
 				<th>Código</th>
 				<th>Nome do produto</th>
+				<th>Marca</th>
+				<th>Categoria</th>
 				<th>Quantidade em estoque</th>
 			</tr>
 		</thead>
@@ -27,6 +29,8 @@
 				<tr>
 					<td><c:out value="${item.codigo}"/></td>
 					<td><c:out value="${item.produto.nome}"/></td>
+					<td><c:out value="${item.produto.marca}"/></td>
+					<td><c:out value="${item.produto.categoria}"/></td>
 					<td><c:out value="${item.quantidade}"/></td>
 				</tr>			
 			</c:forEach>

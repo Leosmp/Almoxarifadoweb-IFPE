@@ -4,28 +4,43 @@ import br.recife.edu.ifpe.controller.db.DB;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoqueJDBC;
 import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionariosJDBC;
 import br.recife.edu.ifpe.model.repositorios.RepositorioItemEntradaJDBC;
+import br.recife.edu.ifpe.model.repositorios.RepositorioItemSaidaJDBC;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntradaJDBC;
+import br.recife.edu.ifpe.model.repositorios.RepositorioLoteSaidaJDBC;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutosJDBC;
+import br.recife.edu.ifpe.model.repositorios.RepositorioRelatorioJDBC;
 
 public class DaoFactory {
 	
 	public static RepositorioProdutosJDBC createProdutosJDBC() {
-		return new RepositorioProdutosJDBC(DB.getConnection());
+		return RepositorioProdutosJDBC.getCurrentInstance(DB.getConnection());
 	}
 	
 	public static RepositorioFuncionariosJDBC createFuncionariosJDBC() {
-		return new RepositorioFuncionariosJDBC(DB.getConnection());
+		return RepositorioFuncionariosJDBC.getCurrentInstance(DB.getConnection());
 	}
 	
 	public static RepositorioEstoqueJDBC createEstoqueJDBC() {
-		return new RepositorioEstoqueJDBC(DB.getConnection());
+		return RepositorioEstoqueJDBC.getCurrentInstance(DB.getConnection());
 	}
 	
 	public static RepositorioItemEntradaJDBC createItemEntradaJDBC() {
-		return new RepositorioItemEntradaJDBC(DB.getConnection());
+		return RepositorioItemEntradaJDBC.getCurrentInstance(DB.getConnection());
 	}
 	
 	public static RepositorioLoteEntradaJDBC createLoteEntradaJDBC() {
-		return new RepositorioLoteEntradaJDBC(DB.getConnection());
+		return RepositorioLoteEntradaJDBC.getCurrentInstance(DB.getConnection());
+	}
+	
+	public static RepositorioItemSaidaJDBC createItemSaidaJDBC() {
+		return RepositorioItemSaidaJDBC.getCurrentInstance(DB.getConnection());
+	}
+	
+	public static RepositorioLoteSaidaJDBC createLoteSaidaJDBC() {
+		return RepositorioLoteSaidaJDBC.getCurrentInstance(DB.getConnection());
+	}
+	
+	public static RepositorioRelatorioJDBC createRelatorioJDBC() {
+		return RepositorioRelatorioJDBC.getCurrentInstance(DB.getConnection());
 	}
 }

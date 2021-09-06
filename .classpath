@@ -9,6 +9,13 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Java-libs/jdbc-conncetors/mysql-connector-java-8.0.21/mysql-connector-java-8.0.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dev Dreamm/Downloads/mysql-connector-java-8.0.25.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Dev Dreamm/Downloads/jstl-standard.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Dev Dreamm/Downloads/jstl-api-1.2.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Dev Dreamm/Downloads/javax.servlet-3.0.jar.zip"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-api-1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.servlet-3.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-standard.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/tomcat-jsp-api-9.0.0.M18.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

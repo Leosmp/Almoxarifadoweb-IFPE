@@ -11,14 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import br.recife.edu.ifpe.model.classes.Estoque;
 import br.recife.edu.ifpe.model.classes.ItemEntrada;
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.dao.DaoFactory;
-import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
-import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 
 /**
  * Servlet implementation class LoteEntradaServlet
@@ -43,8 +40,9 @@ public class LoteEntradaServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
-
-		LoteEntrada loteEntrada = RepositorioLoteEntrada.getCurrentInstance().read(codigo);
+		
+		LoteEntrada loteEntrada = DaoFactory.createLoteEntradaJDBC().findById(codigo);
+		response.setCharacterEncoding("UTF-8");
 
 		String responseJSON = "{\"codigo\":" + loteEntrada.getCodigo() + "," + "\"descricao\":\""
 								+ loteEntrada.getDescricao() + "\",\"itens\":[";

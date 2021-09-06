@@ -63,7 +63,7 @@ public class ProdutoServlet extends HttpServlet {
 		if (atualiza == null) {
 			
 			DaoFactory.createProdutosJDBC().insert(p);
-
+			
 			ItemEstoque itemEstoque = new ItemEstoque(p,0);
 			DaoFactory.createEstoqueJDBC().insert(itemEstoque); 
 			

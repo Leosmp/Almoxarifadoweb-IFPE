@@ -20,7 +20,8 @@
 					<th >Código</th>
 					<th>Nome</th>
 					<th>Departamento</th>
-					<th colspan="2">Operações</th>
+					<th>Ação</th>
+					<th>Lote de Entrada</th>				
 				</tr>
 			</thead>
 			<tbody>
@@ -36,6 +37,10 @@
 							</a> 
 							<a href="#" onclick="deletar(${item.codigo})" class="text-danger pl-3">
 								<i class="far fa-trash-alt"></i>
+							</a>							
+						</td>
+						<td>
+							<a href="#" onclick="loteEntrada(${item.codigo})" class="btn btn-info btn-sm">Retirar itens
 							</a>
 						</td>
 					</tr>
@@ -57,6 +62,10 @@
 				.then(function(response){
 				location.reload();
 			});
+		};
+
+		function loteEntrada(codigo){
+			window.location.href = "lotesaida.jsp?id="+codigo;
 		};
 		
 	</script>

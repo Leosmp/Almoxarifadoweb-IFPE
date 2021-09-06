@@ -21,17 +21,25 @@ import br.recife.edu.ifpe.model.dao.DaoFactory;
 
 public class RepositorioLoteEntradaJDBC {
 
-	private Connection conn;
+	private static Connection conn;
+	private static RepositorioLoteEntradaJDBC myself = null;
 	
-	public RepositorioLoteEntradaJDBC(Connection conn) {
+	private RepositorioLoteEntradaJDBC(Connection conn) {
 		this.conn = conn;
 	}
+	
+	public static RepositorioLoteEntradaJDBC getCurrentInstance(Connection conn){
+        if(myself == null)
+            myself = new RepositorioLoteEntradaJDBC(conn);
+        
+        return myself;
+    }
 
 	public void insert(LoteEntrada loteEntrada) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO tb_lote_entrada(data) VALUES (?)",
+					"INSERT INTO tb_lote_entrada(dataEntrada) VALUES (?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setDate(1, new java.sql.Date(loteEntrada.getData().getTime()));
@@ -59,7 +67,7 @@ public class RepositorioLoteEntradaJDBC {
 
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE tb_lote_entrada SET data = ? WHERE codigo = ?");
+			st = conn.prepareStatement("UPDATE tb_lote_entrada SET dataEntrada = ? WHERE codigo = ?");
 			
 			st.setDate(1, new java.sql.Date(loteEntrada.getData().getTime()));
 			st.setInt(2, loteEntrada.getCodigo());
@@ -145,7 +153,7 @@ public class RepositorioLoteEntradaJDBC {
 		LoteEntrada loteEntrada = new LoteEntrada();
 		List<ItemEntrada> listItemEntrada = DaoFactory.createItemEntradaJDBC().findItensDoLote(rs.getInt("codigo"));
 		loteEntrada.setCodigo(rs.getInt("codigo"));
-		loteEntrada.setData(new java.util.Date(rs.getTimestamp("data").getTime()));
+		loteEntrada.setData(new java.util.Date(rs.getTimestamp("dataEntrada").getTime()));
 		loteEntrada.setItens(listItemEntrada);
 		return loteEntrada;
 	}

@@ -14,13 +14,22 @@ import br.recife.edu.ifpe.model.classes.Funcionario;
 
 public class RepositorioFuncionariosJDBC {
 
-	private Connection conn;
+	private static Connection conn;
+	private static RepositorioFuncionariosJDBC myself = null;
 	
-	public RepositorioFuncionariosJDBC(Connection conn) {
+	private RepositorioFuncionariosJDBC(Connection conn) {
 		this.conn = conn;
 	}
+	
+	public static RepositorioFuncionariosJDBC getCurrentInstance(Connection conn){
+        if(myself == null)
+            myself = new RepositorioFuncionariosJDBC(conn);
+        
+        return myself;
+    }	
 
 	public void insert(Funcionario func) {
+		Connection conn = DB.getConnection();
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(

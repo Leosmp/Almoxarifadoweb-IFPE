@@ -70,4 +70,13 @@ public class LoteSaida {
         this.responsavel = responsavel;
     }
     
+    public int getQuantidadeTotal() {
+    	int qtd = 0;
+    	for(ItemSaida x : itens) {
+    		qtd += x.getQuantidade();
+    	}
+    	
+    	return qtd;
+    }
+    
 }

@@ -18,11 +18,19 @@ import br.recife.edu.ifpe.model.classes.Produto;
 
 public class RepositorioItemEntradaJDBC {
 
-	private Connection conn;
+	private static Connection conn;
+	private static RepositorioItemEntradaJDBC myself = null;
 	
-	public RepositorioItemEntradaJDBC(Connection conn) {
+	private RepositorioItemEntradaJDBC(Connection conn) {
 		this.conn = conn;
 	}
+	
+	public static RepositorioItemEntradaJDBC getCurrentInstance(Connection conn){
+        if(myself == null)
+            myself = new RepositorioItemEntradaJDBC(conn);
+        
+        return myself;
+    }	
 
 	public void insert(ItemEntrada itemEntrada) {
 		PreparedStatement st = null;
@@ -135,7 +143,7 @@ public class RepositorioItemEntradaJDBC {
 			st = conn.prepareStatement(
 					"SELECT 	tb_item_entrada.*,\r\n" + 
 					"		tb_produto.nome, tb_produto.marca, tb_produto.categoria, tb_produto.descricao, \r\n" + 
-					"        tb_lote_entrada.data \r\n" + 
+					"        tb_lote_entrada.dataEntrada \r\n" + 
 					"from tb_item_entrada\r\n" + 
 					"INNER JOIN tb_produto ON tb_item_entrada.tb_produto_codigo = tb_produto.codigo\r\n" + 
 					"INNER JOIN tb_lote_entrada ON tb_item_entrada.tb_lote_entrada_codigo = tb_lote_entrada.codigo\r\n" + 
@@ -185,7 +193,7 @@ public class RepositorioItemEntradaJDBC {
 		try {
 			st = conn.prepareStatement("SELECT 	tb_item_entrada.*, " + 
 					"tb_produto.nome, tb_produto.marca, tb_produto.categoria, tb_produto.descricao, " + 
-					"tb_lote_entrada.data " + 
+					"tb_lote_entrada.dataEntrada " + 
 					"from tb_item_entrada " + 
 					"INNER JOIN tb_produto ON tb_item_entrada.tb_produto_codigo = tb_produto.codigo " + 
 					"INNER JOIN tb_lote_entrada ON tb_item_entrada.tb_lote_entrada_codigo = tb_lote_entrada.codigo");
@@ -246,7 +254,7 @@ public class RepositorioItemEntradaJDBC {
 	private LoteEntrada instantiateLoteEntrada(ResultSet rs) throws SQLException{
 		LoteEntrada loteEntrada = new LoteEntrada();
 		loteEntrada.setCodigo(rs.getInt("tb_lote_entrada_codigo"));
-		loteEntrada.setData(new java.util.Date(rs.getTimestamp("data").getTime()));
+		loteEntrada.setData(new java.util.Date(rs.getTimestamp("dataEntrada").getTime()));
 		return loteEntrada;
 	}
 }

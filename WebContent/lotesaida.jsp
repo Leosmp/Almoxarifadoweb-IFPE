@@ -10,11 +10,11 @@
 </head>
 <body>
 	<jsp:include page="index.html"/>
-	<h4 class="text-info mt-3 mb-3 ml-3">Cadastro de lote de entrada</h4>
+	<h4 class="mt-3">Cadastro de lote de saída</h4>
 
 	<p><c:out value="${msg}"/></p>
-
-	<ifpe:carregarLista carregar="produtos"/>
+	
+	<ifpe:carregarLista carregar="estoque"/>
 
 	<table class="table table-hover">
 		<thead class="table-info">
@@ -23,17 +23,19 @@
 				<th>Nome</th>
 				<th>Marca</th>
 				<th>Categoria</th>
+				<th>Quantidade</th>
 				<th>Operações</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="pAux" items="${produtos}">
+			<c:forEach var="item" items="${listaEstoque}">
 				<tr>
-					<td>${pAux.codigo}</td>
-					<td>${pAux.nome}</td>
-					<td>${pAux.marca}</td>
-					<td>${pAux.categoria}</td>
-					<td><a 	href="#" class="text-dark pl-3" onclick="inserir(${pAux.codigo})"> 
+					<td>${item.codigo}</td>
+					<td>${item.produto.nome}</td>
+					<td>${item.produto.marca}</td>
+					<td>${item.produto.categoria}</td>
+					<td>${item.quantidade}</td>
+					<td><a 	href="#" class="text-dark pl-3" onclick="inserir(${item.codigo})"> 
 							<i class="fas fa-plus-square"></i>
 						</a>
 					</td>
@@ -42,7 +44,7 @@
 		</tbody>
 	</table>
 
-	<c:if test="${loteEntrada != null }">
+	<c:if test="${loteSaida != null }">
 
 		<hr>
 
@@ -58,7 +60,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="item" items="${loteEntrada.itens}">
+				<c:forEach var="item" items="${loteSaida.itens}">
 					<tr>
 						<td>${item.produto.codigo}</td>
 						<td>${item.produto.nome}</td>
@@ -77,31 +79,31 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<button class="btn btn-info ml-2" onclick="cadastrar()">Cadastrar</button>
+		<button class="btn btn-info ml-2" onclick="cadastrar(${param.id})">Cadastrar</button>
 	</c:if>
 
 	<script>
 		function inserir(codigo){
-			fetch("LoteEntradaServlet?operacao=mais&codigo=" + codigo,{method:'put'})
+			fetch("LoteSaidaServlet?operacao=mais&codigo=" + codigo,{method:'put'})
 				.then(function(){
 					location.reload();
 			});
 	};
 
 		function diminuir(codigo){
-			fetch("LoteEntradaServlet?operacao=menos&codigo=" + codigo,{method:'put'})
+			fetch("LoteSaidaServlet?operacao=menos&codigo=" + codigo,{method:'put'})
 				.then(function(){
 					location.reload();
 			});
 	};
 
-	function cadastrar(){
-		fetch("LoteEntradaServlet",{method:'post'})
+	function cadastrar(id){
+		fetch("LoteSaidaServlet?id=" + id,{method:'post'})
 			.then(function(response){
 				if(response.status === 500){
 					location.reload();
 					}else{
-						location.href = "listaLoteEntrada.jsp";
+						location.href = "listaLoteSaida.jsp";
 						}				
 				
 		}).catch(function(erro){

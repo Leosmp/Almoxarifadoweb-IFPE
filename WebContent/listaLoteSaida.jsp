@@ -1,32 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri='http://java.sun.com/jstl/core_rt' prefix='c'%>
-<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt"  prefix="fmt"%>
 <%@taglib prefix="ifpe" uri="br.recife.edu.ifpe.customtags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Lista de Itens de Entrada</title>
+<title>Lista de Itens de Saída</title>
 <style>
-.modal1 {
-	position: absolute;
-	background: white;
-	top: 100px;
-	left: 100px;
-	width: 250px;
-}
+	.modal1{
+		position: absolute;
+		background: white;
+		top: 100px;
+		left: 100px;
+		width: 250px;
+	}
 </style>
 </head>
 <body>
 	<jsp:include page="index.html" />
 
 	<c:out value="${msg}" />
-	<c:remove var="msg" scope="session" />
-	<ifpe:carregarLista carregar="loteentrada" />
+	<c:remove var="msg" scope="session"/>
+	<ifpe:carregarLista carregar="lotesaida"/>
 
-	<h4 class="text-info mt-4 mb-4 ml-4">Listagem de Lotes de entrada</h4>
-
+	<h4 class="text-info mt-4 mb-4 ml-4">Listagem de Lotes de saída</h4>
 
 	<table class="table table-hover">
 		<thead class="table-info">
@@ -38,26 +37,26 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="item" items="${listaLoteEntrada}">
+			<c:forEach var="item" items="${listLoteSaida}">
 				<tr>
-					<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.data}"
-							type="date" /></td>
+					<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.data}" type="date"/></td>
 					<td>${item.codigo}</td>
 					<td>${item.quantidadeTotal}</td>
-					<td><a href='#' onclick="carregarItens(${item.codigo})">visualiza
-							itens</a></td>
+					<td>
+						<a href='#' onclick="carregarItens(${item.codigo})">visualiza itens</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-
+	
 	<!-- Modal -->
 	<div class="modal fade" id="modalVisualizar" tabindex="-1"
 		role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div id="modalHeader">
-					<h5 class="modal-title" id="modalLabel">Lista de Itens de Entrada do Lote</h5>
+					<h5 class="modal-title" id="modalLabel">Lista de Itens do Lote</h5>
 				</div>
 				<div class="modal-body" id="modalBody"></div>
 				<div class="modal-footer">
@@ -66,19 +65,20 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<script>
+
 		document.getElementById("modalButton").addEventListener("click",function(){
-    		modalBody.innerHTML = "";
-   		 });
-		
+			modalBody.innerHTML = "";
+		 });
+	
 		function carregarItens(codigo){			
 			
-			fetch("LoteEntradaServlet?codigo="+codigo,{method:"get"}).then(function(response){
+			fetch("LoteSaidaServlet?codigo="+codigo,{method:"get"}).then(function(response){
                 response.text().then(function(text){
                     let objeto = JSON.parse(text);
-
-					let modalVisualizar = document.getElementById("modalVisualizar");
+                    
+                    let modalVisualizar = document.getElementById("modalVisualizar");
 
 			       	let modalBody = document.getElementById("modalBody");
 			      	document.getElementById("modalHeader").className = "modal-header text-info";
@@ -116,10 +116,11 @@
                         tabela.appendChild(tr);
                     }
 
-                    $("#modalVisualizar").modal({backdrop: 'static', keyboard: true, show: true	});                     
-               	});
-           	});
-		}
+                    $("#modalVisualizar").modal({backdrop: 'static', keyboard: true, show: true	});  
+                    
+                });
+            });
+			}
 
 	</script>
 </body>

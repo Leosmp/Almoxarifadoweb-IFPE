@@ -17,11 +17,19 @@ import br.recife.edu.ifpe.model.classes.Produto;
 
 public class RepositorioEstoqueJDBC {
 
-	private Connection conn;
+	private static Connection conn;
+	private static RepositorioEstoqueJDBC myself = null;
 	
-	public RepositorioEstoqueJDBC(Connection conn) {
+	private RepositorioEstoqueJDBC(Connection conn) {
 		this.conn = conn;
 	}
+	
+	public static RepositorioEstoqueJDBC getCurrentInstance(Connection conn){
+        if(myself == null)
+            myself = new RepositorioEstoqueJDBC(conn);
+        
+        return myself;
+    }
 
 	public void insert(ItemEstoque itemEstoque) {
 		PreparedStatement st = null;
@@ -174,5 +182,5 @@ public class RepositorioEstoqueJDBC {
 		p.setCategoria(rs.getString("categoria"));
 		p.setDescricao(rs.getString("descricao"));
 		return p;
-	}
+	}	
 }

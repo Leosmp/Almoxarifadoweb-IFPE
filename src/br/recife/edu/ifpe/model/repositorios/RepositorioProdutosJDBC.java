@@ -14,11 +14,19 @@ import br.recife.edu.ifpe.model.classes.Produto;
 
 public class RepositorioProdutosJDBC {
 
-	private Connection conn;
+	private static Connection conn;
+	private static RepositorioProdutosJDBC myself = null;
 	
-	public RepositorioProdutosJDBC(Connection conn) {
+	private RepositorioProdutosJDBC(Connection conn) {
 		this.conn = conn;
 	}
+	
+	public static RepositorioProdutosJDBC getCurrentInstance(Connection conn){
+        if(myself == null)
+            myself = new RepositorioProdutosJDBC(conn);
+        
+        return myself;
+    }	
 
 	public void insert(Produto p) {
 		PreparedStatement st = null;
